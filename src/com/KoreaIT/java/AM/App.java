@@ -65,16 +65,7 @@ public class App {
 				String[] cmdBits = cmd.split(" ");
 				int id = Integer.parseInt(cmdBits[2]);
 
-				Article foundArticle = null;
-
-				for (int i = 0; i < articles.size(); i++) {
-					Article article = articles.get(i);
-
-					if (article.id == id) {
-						foundArticle = article;
-						break;
-					}
-				}
+				Article foundArticle = getArticleById(id);
 
 				if (foundArticle == null) {
 					System.out.printf("%d번 게시물은 존재하지 않습니다\n", id);
@@ -93,16 +84,7 @@ public class App {
 				String[] cmdBits = cmd.split(" ");
 				int id = Integer.parseInt(cmdBits[2]);
 
-				Article foundArticle = null;
-
-				for (int i = 0; i < articles.size(); i++) {
-					Article article = articles.get(i);
-
-					if (article.id == id) {
-						foundArticle = article;
-						break;
-					}
-				}
+				Article foundArticle = getArticleById(id);
 
 				if (foundArticle == null) {
 					System.out.printf("%d번 게시물은 존재하지 않습니다\n", id);
@@ -123,25 +105,13 @@ public class App {
 				String[] cmdBits = cmd.split(" ");
 				int id = Integer.parseInt(cmdBits[2]);
 
-				int foundIndex = -1;
-
-				for (int i = 0; i < articles.size(); i++) {
-					Article article = articles.get(i);
-
-					if (article.id == id) {
-						foundIndex = i;
-						break;
-					}
-				}
+				int foundIndex = getArticleIndexById(id);
 
 				if (foundIndex == -1) {
 					System.out.printf("%d번 게시물은 존재하지 않습니다\n", id);
 					continue;
 				}
 
-				// size() -> 3
-				// index -> 0 1 2
-				// id -> 1 2 3
 				articles.remove(foundIndex);
 
 				System.out.printf("%d번 게시물이 삭제 되었습니다\n", id);
@@ -156,11 +126,34 @@ public class App {
 		System.out.println("== 프로그램 종료 ==");
 	}
 
+	private int getArticleIndexById(int id) {
+		int i = 0;
+
+		for (Article article : articles) {
+			if (article.id == id) {
+				return i;
+			}
+			i++;
+		}
+
+		return -1;
+	}
+
+	private Article getArticleById(int id) {
+//		향상된 for문
+		for (Article article : articles) {
+			if (article.id == id) {
+				return article;
+			}
+		}
+
+		return null;
+	}
+
 	private void makeTestData() {
 		System.out.println("테스트를 위한 데이터를 생성합니다");
 		articles.add(new Article(1, Util.getNowDateStr(), "title1", "body1", 11));
 		articles.add(new Article(2, Util.getNowDateStr(), "title2", "body2", 22));
 		articles.add(new Article(3, Util.getNowDateStr(), "title3", "body3", 33));
-		articles.add(new Article(4, Util.getNowDateStr(), "title4", "body4", 44));
 	}
 }
