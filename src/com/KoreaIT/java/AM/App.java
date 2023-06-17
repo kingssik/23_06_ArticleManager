@@ -141,10 +141,16 @@ public class App {
 
 	private Article getArticleById(int id) {
 //		향상된 for문
-		for (Article article : articles) {
-			if (article.id == id) {
-				return article;
-			}
+//		for (Article article : articles) {
+//			if (article.id == id) {
+//				return article;
+//			}
+//		}
+		
+		int idx = getArticleIndexById(id);
+		
+		if(idx != -1) {
+			return articles.get(idx);
 		}
 
 		return null;
